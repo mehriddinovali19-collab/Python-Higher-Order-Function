@@ -64,8 +64,8 @@ def get_emails_of_older_than(data: dict, age: int) -> list[str]:
     Returns:
         list[str]: List of email addresses.
     """
-    pass
-
+    return list( map(lambda user: user["email"],
+                      filter(lambda user: user["dob"]["age"] > age, data["results"])))
 
 def sort_users_by_age(data: dict, descending: bool = False) -> list[dict]:
     """
@@ -78,7 +78,11 @@ def sort_users_by_age(data: dict, descending: bool = False) -> list[dict]:
     Returns:
         list[dict]: List of users with name and age sorted accordingly.
     """
-    pass
+    return sorted(map(lambda user: {
+                "name": f"{user['name']['first']} {user['name']['last']}",
+                "age": user["dob"]["age"] },data["results"]),key=lambda x: x["age"],
+                reverse=descending)
+    
 
 
 def get_usernames_starting_with(data: dict, letter: str) -> list[str]:
@@ -92,7 +96,10 @@ def get_usernames_starting_with(data: dict, letter: str) -> list[str]:
     Returns:
         list[str]: List of matching usernames.
     """
-    pass
+    return list(map
+                (lambda user: user["login"]["username"],
+                     filter(lambda user: user["login"]["username"].startswith(letter),
+                                                                    data["results"])))
 
 
 def get_average_age(data: dict) -> float:
@@ -105,7 +112,7 @@ def get_average_age(data: dict) -> float:
     Returns:
         float: Average age.
     """
-    pass
+    ages = list(map(lambda user: user))
 
 
 def group_users_by_nationality(data: dict) -> dict:
@@ -178,5 +185,11 @@ def get_registered_before_year(data: dict, year: int) -> list[dict]:
 #print(res)
 #res = get_users_by_country(randomuser_data, "Netherlands")
 #print(res)
-res = count_users_by_gender(randomuser_data)
+#res = count_users_by_gender(randomuser_data)
+#print(res)
+#res = get_emails_of_older_than(randomuser_data, 60)
+#print(res)
+#res = sort_users_by_age(randomuser_data)
+#print(res)
+res =  get_usernames_starting_with(randomuser_data, "g")
 print(res)
