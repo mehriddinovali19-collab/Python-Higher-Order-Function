@@ -1,5 +1,5 @@
 from dataset import randomuser_data
-
+from collections import Counter
 
 def get_full_names(data: dict) -> list[str]:
     """
@@ -30,7 +30,14 @@ def get_users_by_country(data: dict, country: str) -> list[dict]:
     Returns:
         list[dict]: List of dictionaries containing full name and email of matching users.
     """
-    pass
+    res = list(
+        filter(lambda user: user['location']['country'] == country, data["results"])
+    )
+    return list(
+        map(
+            lambda user: f"{user['name']['first']} {user['name']['last']}",
+            res,
+        ))
 
 
 def count_users_by_gender(data: dict) -> dict:
@@ -40,10 +47,10 @@ def count_users_by_gender(data: dict) -> dict:
     Args:
         data (dict): JSON data containing user records.
 
-    Returns:
+    Returns:m
         dict: Dictionary with gender as keys and count as values.
     """
-    pass
+    return dict(Counter(map(lambda u: u["gender"], data["results"])))
 
 
 def get_emails_of_older_than(data: dict, age: int) -> list[str]:
@@ -166,3 +173,10 @@ def get_registered_before_year(data: dict, year: int) -> list[dict]:
         list[dict]: List of users with full name and registration date.
     """
     pass
+
+#res = get_full_names(randomuser_data)
+#print(res)
+#res = get_users_by_country(randomuser_data, "Netherlands")
+#print(res)
+res = count_users_by_gender(randomuser_data)
+print(res)
