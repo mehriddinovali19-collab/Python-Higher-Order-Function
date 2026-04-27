@@ -11,12 +11,8 @@ def get_full_names(data: dict) -> list[str]:
     Returns:
         list[str]: List of full names.
     """
-    return list(
-        map(
-            lambda user: f"{user['name']['first']} {user['name']['last']}",
-            data["results"],
-        )
-    )
+    return list(map(lambda user: f"{user['name'] ['first']}{user['name']['last']}", 
+                    data['results']))
 
 
 def get_users_by_country(data: dict, country: str) -> list[dict]:
@@ -30,14 +26,9 @@ def get_users_by_country(data: dict, country: str) -> list[dict]:
     Returns:
         list[dict]: List of dictionaries containing full name and email of matching users.
     """
-    res = list(
-        filter(lambda user: user['location']['country'] == country, data["results"])
-    )
-    return list(
-        map(
-            lambda user: f"{user['name']['first']} {user['name']['last']}",
-            res,
-        ))
+    res = list(filter(lambda user: user ['location']['country'] == country, data['results']))
+    return list(map(lambda user : f"Name : {user ['name']['first']}{user['name']['first']}, Email:{user['email']}", 
+                     res))
 
 
 def count_users_by_gender(data: dict) -> dict:
@@ -49,8 +40,10 @@ def count_users_by_gender(data: dict) -> dict:
 
     Returns:m
         dict: Dictionary with gender as keys and count as values.
+
     """
-    return dict(Counter(map(lambda u: u["gender"], data["results"])))
+    return dict(Counter(map(lambda user: user['gender'], data['results'])))
+
 
 
 def get_emails_of_older_than(data: dict, age: int) -> list[str]:
@@ -183,13 +176,13 @@ def get_registered_before_year(data: dict, year: int) -> list[dict]:
 
 #res = get_full_names(randomuser_data)
 #print(res)
-#res = get_users_by_country(randomuser_data, "Netherlands")
+#res = get_users_by_country(randomuser_data, "India")
 #print(res)
-#res = count_users_by_gender(randomuser_data)
-#print(res)
+res = count_users_by_gender(randomuser_data)
+print(res)
 #res = get_emails_of_older_than(randomuser_data, 60)
 #print(res)
 #res = sort_users_by_age(randomuser_data)
 #print(res)
-res =  get_usernames_starting_with(randomuser_data, "g")
-print(res)
+#res =  get_usernames_starting_with(randomuser_data, "g")
+#print(res)
